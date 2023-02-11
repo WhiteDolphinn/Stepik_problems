@@ -48,7 +48,6 @@ int cmp_Point(const void * p1, const void * p2)
     //x1 == x2
     if(point1.y > point2.y)
         return 1;
-
     if(point1.y < point2.y)
         return -1;
 
