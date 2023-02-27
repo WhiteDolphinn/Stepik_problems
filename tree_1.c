@@ -12,6 +12,7 @@ struct Node* tree_add(struct Node* tree, Data x);
 void tree_print(struct Node* tree);
 void tree_destroy(struct Node * tree);
 void tree_print_leaves(struct Node* tree);
+unsigned int tree_high(struct Node* tree);
 
 int main()
 {
@@ -40,8 +41,11 @@ int main()
     }
 
     //tree_print(tree);
+    //tree_print_leaves(tree);
 
-    tree_print_leaves(tree);
+    unsigned int high = 1;
+    tree_high(tree, &high);
+    printf("%u ", high);
 
     tree_destroy(tree);
 }
@@ -97,4 +101,15 @@ void tree_print_leaves(struct Node* tree)
         printf("%d ", tree->val);
 
     tree_print_leaves(tree->right);
+}
+
+unsigned int tree_high(struct Node* tree)
+{
+    static unsigned int high = 1;
+    static unsigned int max_high = 1;
+    if(tree->left == NULL && tree->right == NULL)
+        return high;
+
+
+
 }
