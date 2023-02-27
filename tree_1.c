@@ -10,7 +10,8 @@ struct Node{
 
 struct Node* tree_add(struct Node* tree, Data x);
 void tree_print(struct Node* tree);
-void tree_destroy (struct Node * tree);
+void tree_destroy(struct Node * tree);
+void tree_print_leaves(struct Node* tree);
 
 int main()
 {
@@ -38,8 +39,10 @@ int main()
         scanf("%d", &buf);
     }
 
+    //tree_print(tree);
 
-    tree_print(tree);
+    tree_print_leaves(tree);
+
     tree_destroy(tree);
 }
 
@@ -81,4 +84,17 @@ void tree_destroy(struct Node * tree)
     tree_destroy(tree->left);
     tree_destroy(tree->right);
     free(tree);
+}
+
+void tree_print_leaves(struct Node* tree)
+{
+    if(tree == NULL)
+        return;
+
+    tree_print_leaves(tree->left);
+
+    if(tree->left == NULL && tree->right == NULL)
+        printf("%d ", tree->val);
+
+    tree_print_leaves(tree->right);
 }
