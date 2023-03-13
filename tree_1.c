@@ -13,6 +13,8 @@ void tree_print(struct Node* tree);
 void tree_destroy(struct Node * tree);
 void tree_print_leaves(struct Node* tree);
 unsigned int tree_high(struct Node* tree);
+char is_balanced(struct Node* tree);
+void print_in_high(struct Node* tree, unsigned int high);
 
 int main()
 {
@@ -43,9 +45,13 @@ int main()
     //tree_print(tree);
     //tree_print_leaves(tree);
 
-    unsigned int high = 1;
-    tree_high(tree, &high);
-    printf("%u ", high);
+    /*unsigned int high = tree_high(tree);
+    printf("%u\n", high);*/
+
+    if(is_balanced(tree))
+        printf("YES\n");
+    else
+        printf("NO\n");
 
     tree_destroy(tree);
 }
@@ -105,11 +111,34 @@ void tree_print_leaves(struct Node* tree)
 
 unsigned int tree_high(struct Node* tree)
 {
-    static unsigned int high = 1;
-    static unsigned int max_high = 1;
-    if(tree->left == NULL && tree->right == NULL)
-        return high;
+    if (tree == NULL)
+        return 0;
 
+    unsigned int high_left = tree_high(tree->left);
+    unsigned int high_right = tree_high(tree->right);
 
+    if(high_left >= high_right)
+        return high_left + 1;
+    else
+        return high_right + 1;
+}
 
+char is_balanced(struct Node* tree)
+{
+    if (tree == NULL)
+        return 0;
+
+    unsigned int high_left = tree_high(tree->left);
+    unsigned int high_right = tree_high(tree->right);
+
+    if(high_left >= high_right && high_left - high_right > 1)
+        return 0;
+
+    if(high_right >= high_left && high_right - high_left > 1)
+        return 0;
+
+    if(high_left >= high_right)
+        return high_left + 1;
+    else
+        return high_right + 1;
 }
